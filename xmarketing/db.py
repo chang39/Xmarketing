@@ -3,20 +3,23 @@
 import datetime
 import sqlalchemy
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, ForeignKey
-from sqlalchemy.dialects.mysql import VARCHAR, BIGINT, LONGTEXT, INTEGER, DATETIME
-from donato import app
+from sqlalchemy import Column
+from sqlalchemy.dialects.mysql import VARCHAR, BIGINT, DATETIME, BOOLEAN
+from xmarketing import app
+
+print("Connecting " + app.config['DATABASE_URI'])
 
 # echo=False
 engine = create_engine(app.config['DATABASE_URI'],pool_recycle=3600)
 
-Session = sessionmaker(bind=engine)
+Session = scoped_session(sessionmaker(bind=engine))
 
 Base = declarative_base()
 
-class Visitor(object):
+class Visitor(Base):
+    __tablename__ = 'visitor'
     """docstring for Visitor."""
     id = Column(BIGINT(20), primary_key=True)
     visitor_name = Column(VARCHAR(255))
@@ -28,6 +31,7 @@ class Visitor(object):
     mobile = Column(VARCHAR(255))
     fax = Column(VARCHAR(255))
     preference = Column(VARCHAR(255))
+    is_sent = Column(BOOLEAN)
     create_time = Column(DATETIME)
 
 Base.metadata.create_all(engine)
