@@ -73,7 +73,17 @@ def upload_file():
             busicard_uri = 'http://p3atcmc03.bkt.clouddn.com/namecard1.jpg'
             rec_str = ocr.businesscard_recognize(app.config['APPID'], busicard_uri)
 
-    return rec_str
+            return rec_str
+
+    return '''
+    <!doctype html>
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+    <form method=post enctype=multipart/form-data>
+      <input type=file name=file>
+      <input type=submit value=Upload>
+    </form>
+    '''
 
 def recognition(pic_uri):
     return ocr.businesscard_recognize(app.config['APPID'], pic_uri)
