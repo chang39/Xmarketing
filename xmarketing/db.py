@@ -22,16 +22,19 @@ class Visitor(Base):
     __tablename__ = 'visitor'
     """docstring for Visitor."""
     id = Column(BIGINT(20), primary_key=True)
-    visitor_name = Column(VARCHAR(255))
+    visitor_name = Column(VARCHAR(255), nullable=False)
     company_name = Column(VARCHAR(255))
-    email = Column(VARCHAR(255))
+    title = Column(VARCHAR(255))
+    email = Column(VARCHAR(255), nullable=False)
     website = Column(VARCHAR(255))
     address = Column(VARCHAR(255))
     telephone = Column(VARCHAR(255))
     mobile = Column(VARCHAR(255))
-    fax = Column(VARCHAR(255))
-    preference = Column(VARCHAR(255))
-    is_sent = Column(BOOLEAN)
+    prefered_products = Column(VARCHAR(255))  # EPCalin EPColor Both(Mutiple choice)
+    application = Column(VARCHAR(255))         # manually input
+    preference = Column(VARCHAR(255))           # Mutiple choice
+    pic_path = Column(VARCHAR(255))
+    is_sent = Column(BOOLEAN, default=False)
     create_time = Column(DATETIME)
 
 Base.metadata.create_all(engine)
