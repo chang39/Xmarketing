@@ -45,7 +45,7 @@ def visitor_record():
     <title>X-marketing</title>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%s</h1>
-    <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.yahoo.com">Back To Index</a></h1>
+    <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../index">Back To Index</a></h1>
     ''' %(json.dumps(Result().success().set_message('success').to_dict()))
 
     # sendmail.send(app.config)
