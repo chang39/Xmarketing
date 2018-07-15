@@ -80,7 +80,7 @@ def onUploda():
 
         busicard_uri += filename
 
-        busicard_uri = 'http://123.206.55.228/busicard/20180715232838.jpg'
+        #busicard_uri = 'http://123.206.55.228/busicard/20180715232838.jpg'
 
         recv_str = ocr.businesscard_recognize(app.config['APPID'], busicard_uri)
         print(recv_str)
