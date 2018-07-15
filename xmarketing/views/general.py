@@ -66,7 +66,7 @@ def upload_file():
 
             busicard_uri += filename
 
-            busicard_uri = 'http://p3atcmc03.bkt.clouddn.com/namecard3.jpg'
+            busicard_uri = 'http://p3atcmc03.bkt.clouddn.com/namecard1.jpg'
 
             recv_str = ocr.businesscard_recognize(app.config['APPID'], busicard_uri)
             recv_json = json.loads(recv_str)
@@ -79,15 +79,7 @@ def upload_file():
 
             return render_template('client-info.html', data = recv_data)
 
-    return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
+    return render_template('index.html')
 
 def data_retrv(recv_json, filename):
     result = {'filename':filename}
@@ -121,13 +113,5 @@ def data_retrv(recv_json, filename):
     print (result)
     return result
 
-
-
-
 def recognition(pic_uri):
     return ocr.businesscard_recognize(app.config['APPID'], pic_uri)
-
-
-@mod.route('/test', methods=['GET'])
-def test():
-    return "Hello!"
