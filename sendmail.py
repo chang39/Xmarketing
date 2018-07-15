@@ -31,25 +31,35 @@ def scan_and_send(limit=15):
         msg['Subject'] = Header('Thanks for visiting our booth at IFT2018!').encode()
         msg['From'] = '%s <%s>' % (Header('EPC Natural Products').encode(), 'epcnaturalproducts@epcchem.com')
         msg['To'] = visitor.email
-        msg['Reply-to'] = app.config['EPCOLOR_REPLYTO'] if visitor.prefered_products == 'EPColor' else app.config['EPCALIN_REPLYTO']
         msg['Message-id'] = email.utils.make_msgid()
         msg['Date'] = email.utils.formatdate()
 
+        email_content = app.config['EPCOLOR_MAIL_CONTENT']
+        product_list = visitor.prefered_products.strip().split(',')
+        print(product_list)
+        if 'EPCalin' in product_list or 'MonkFruitevia' in product_list:
+            email_content =  app.config['EPCALIN_MAIL_CONTENT']
+            msg['Reply-to'] = app.config['EPCALIN_REPLYTO']
+        else:
+            msg['Reply-to'] = app.config['EPCOLOR_REPLYTO']
         # 构建alternative的text/plain部分
-        textplain = MIMEText((app.config['EPCOLOR_MAIL_CONTENT'] if visitor.prefered_products == 'EPColor' else app.config['EPCALIN_MAIL_CONTENT'])%(visitor.visitor_name), 'plain')
+        textplain = MIMEText((email_content)%(visitor.visitor_name), 'plain')
         msg.attach(textplain)
 
-        for attachment in ['AboutEPC', 'EPCalin', 'MonkFruitevia']:
-           pdfpart = MIMEApplication(open(app.config['BROCHURE_FOLDER']+attachment+'.pdf', 'rb').read())
-           pdfpart.add_header('Content-Disposition', 'attachment', filename=attachment+'.pdf')
+        product_list.append('AboutEPC')
+        print(product_list)
+        for attachment in product_list:
+           pdfpart = MIMEApplication(open(app.config['BROCHURE_FOLDER']+attachment.strip()+'.pdf', 'rb').read())
+           pdfpart.add_header('Content-Disposition', 'attachment', filename=attachment.strip()+'.pdf')
            msg.attach(pdfpart)
 
-        print (('Sending %s E-mail to %s') % (visitor.prefered_products, visitor.visitor_name))
-        result = send_by_smtp(msg,visitor.email)
-        print (result)
+        print (('Sending E-mail to %s') % (visitor.visitor_name))
+        result_str = send_by_smtp(msg,visitor.email)
+        result = json.loads(result_str)
+        print (result['code'])
         if result['code'] == '0':
             visitor.is_sent = True
-    Session.commit()
+            Session.commit()
 
 
 def send_by_smtp(msg, rcptto):

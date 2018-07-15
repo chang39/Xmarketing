@@ -14,7 +14,7 @@ print("Connecting " + app.config['DATABASE_URI'])
 # echo=False
 engine = create_engine(app.config['DATABASE_URI'],pool_recycle=3600)
 
-Session = scoped_session(sessionmaker(bind=engine))
+Session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 
 Base = declarative_base()
 
