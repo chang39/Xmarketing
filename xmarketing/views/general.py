@@ -21,8 +21,7 @@ logger = logging.getLogger('xmarketing')
 def visitor_record():
     args = request.args if request.method == 'GET' else request.form
 
-    try:
-        new_visitor = Visitor(visitor_name = args.get('name'),
+    new_visitor = Visitor(visitor_name = args.get('name'),
                           company_name = args.get('company'),
                           title = args.get('title'),
                           email = args.get('email'),
@@ -37,13 +36,17 @@ def visitor_record():
                           create_time = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
                           )
 
-        Session.add(new_visitor)
-        Session.commit()
-        print(json.dumps(Result().success().set_message('success').to_dict()))
-        return render_template('green.html')
-    except Exception as e:
-        print(json.dumps(Result().fail().set_message(str(e)).to_dict()))
-        return render_template('red.html')
+    Session.add(new_visitor)
+    Session.commit()
+    print(json.dumps(Result().success().set_message('success').to_dict()))
+
+    return '''
+    <!doctype html>
+    <title>X-marketing</title>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%s</h1>
+    <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.yahoo.com">Back To Index</a></h1>
+    ''' %(json.dumps(Result().success().set_message('success').to_dict()))
 
     # sendmail.send(app.config)
 
@@ -77,7 +80,7 @@ def onUploda():
 
         busicard_uri += filename
 
-        #busicard_uri = 'http://p3atcmc03.bkt.clouddn.com/namecard1.jpg'
+        busicard_uri = 'http://123.206.55.228/busicard/20180715232838.jpg'
 
         recv_str = ocr.businesscard_recognize(app.config['APPID'], busicard_uri)
         print(recv_str)
