@@ -38,7 +38,7 @@ def visitor_record():
     Session.add(new_visitor)
     Session.commit()
 
-    sendmail.send(app.config)
+    # sendmail.send(app.config)
 
     print(json.dumps(Result().success().set_message('success').to_dict()))
     return json.dumps(Result().success().set_message('success').to_dict())

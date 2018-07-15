@@ -33,7 +33,6 @@ class Visitor(Base):
     prefered_products = Column(VARCHAR(255))  # EPCalin EPColor Both(Mutiple choice)
     application = Column(VARCHAR(255))         # manually input
     preference = Column(VARCHAR(255))           # Mutiple choice
-    pic_path = Column(VARCHAR(255))
     is_sent = Column(BOOLEAN, default=False)
     create_time = Column(DATETIME)
 
