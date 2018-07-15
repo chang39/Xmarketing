@@ -3,10 +3,11 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="{{ url_for('static', filename='scripts/flexible.js') }}"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles/app.css') }}">
+
+  <title>EPC</title>
 </head>
 <body>
   <div class="app-main">
@@ -18,10 +19,22 @@
       <img src="{{ url_for('static', filename='images/logo-secondary.png') }}" alt="IFT">
     </div>
 
-    <div class="btn-wrapper">
+    <form action="/uploading" method="POST" class="form-uploading" enctype=multipart/form-data>
       <label for="card" class="btn">Business Card Record</label>
-      <input type="file" name="card" id="card">
-    </div>
+      <input type="file" name="file" id="card" accept="image/*">
+    </form>
   </div>
+  <script>
+    var form = document.querySelector('form')
+    var file = document.querySelector('input[name="file"]')
+    file.addEventListener('change', function () {
+      var image = file.files[0]
+      if (image.size >= 6 * 1024 * 1024) {
+        alert('Image size should be under 6MB')
+      } else {
+        form.submit()
+      }
+    })
+  </script>
 </body>
 </html>
