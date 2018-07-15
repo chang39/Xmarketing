@@ -30,9 +30,9 @@ def visitor_record():
                           telephone = args.get('phone'),
                           mobile = args.get('mobile'),
                           application = args.get('application'),
-                          prefered_products = args.get('product'),
+                          prefered_products = (',').join(args.getlist('product')),
                           pic_path = args.get('pic_path'),
-                          preference = args.get('preference'),
+                          preference = (',').join(args.getlist('preference')),
                           create_time = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
                           )
 
@@ -74,7 +74,7 @@ def onUploda():
 
         busicard_uri += filename
 
-        #busicard_uri = 'http://p3atcmc03.bkt.clouddn.com/namecard1.jpg'
+        busicard_uri = 'http://p3atcmc03.bkt.clouddn.com/namecard1.jpg'
 
         recv_str = ocr.businesscard_recognize(app.config['APPID'], busicard_uri)
         recv_json = json.loads(recv_str)
