@@ -107,7 +107,7 @@ def send_by_smtp(msg, rcptto):
 #scheduler
 scheduler = BlockingScheduler()
 
-@scheduler .scheduled_job('interval', seconds=15)
+@scheduler .scheduled_job('interval', minutes=30)
 def send_job():
   scan_and_send()
 
