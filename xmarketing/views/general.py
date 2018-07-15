@@ -21,7 +21,8 @@ logger = logging.getLogger('xmarketing')
 def visitor_record():
     args = request.args if request.method == 'GET' else request.form
 
-    new_visitor = Visitor(visitor_name = args.get('name'),
+    try:
+        new_visitor = Visitor(visitor_name = args.get('name'),
                           company_name = args.get('company'),
                           title = args.get('title'),
                           email = args.get('email'),
@@ -30,18 +31,21 @@ def visitor_record():
                           telephone = args.get('phone'),
                           mobile = args.get('mobile'),
                           application = args.get('application'),
-                          prefered_products = args.get('product'),
-                          preference = args.get('preference'),
+                          prefered_products = (',').join(args.getlist('product')),
+                          pic_path = args.get('pic_path'),
+                          preference = (',').join(args.getlist('preference')),
                           create_time = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
                           )
 
-    Session.add(new_visitor)
-    Session.commit()
+        Session.add(new_visitor)
+        Session.commit()
+        print(json.dumps(Result().success().set_message('success').to_dict()))
+        return render_template('green.html')
+    except Exception as e:
+        print(json.dumps(Result().fail().set_message(str(e)).to_dict()))
+        return render_template('red.html')
 
-    sendmail.send(app.config)
-
-    print(json.dumps(Result().success().set_message('success').to_dict()))
-    return json.dumps(Result().success().set_message('success').to_dict())
+    # sendmail.send(app.config)
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
