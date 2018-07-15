@@ -77,11 +77,12 @@ def onUploda():
 
         busicard_uri += filename
 
-        busicard_uri = 'http://p3atcmc03.bkt.clouddn.com/namecard1.jpg'
+        #busicard_uri = 'http://p3atcmc03.bkt.clouddn.com/namecard1.jpg'
 
         recv_str = ocr.businesscard_recognize(app.config['APPID'], busicard_uri)
+        print(recv_str)
         recv_json = json.loads(recv_str)
-
+        print(recv_json)
         if recv_json['result_list'][0]['code'] != 0:
             return 'Sorry, recognition failed...'
 
