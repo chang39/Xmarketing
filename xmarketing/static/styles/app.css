@@ -1,0 +1,153 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+
+html {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-size: .16rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  min-height: 100%;
+  background-color: #fff;
+}
+
+.app-main {
+  height: 100%;
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.app-main:before,
+.app-main:after {
+  position: absolute;
+  content: '';
+}
+
+.app-main:before {
+  top: 0;
+  right: 0;
+  width: 3rem;
+  height: 5rem;
+  background: url('../images/woman.png') center / auto 100% no-repeat;
+}
+
+.app-main:after {
+  bottom: 0;
+  left: 0;
+  width: 4.1rem;
+  height: 5.17rem;
+  background: url('../images/man.png') center / 100% auto no-repeat;
+}
+
+.logo {
+  margin-top: .92rem;
+  margin-bottom: .43rem;
+  padding-left: .66rem;
+}
+
+.logo__secondary {
+  padding-left: 1.07rem;
+  height: 1.57rem;
+}
+
+.logo > img,
+.logo__secondary > img {
+  display: block;
+  width: auto;
+  height: 100%;
+}
+
+.form-uploading {
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
+.btn {
+  display: inline-block;
+  position: relative;
+  padding: .2rem .23rem;
+  border: .02rem solid #942911;
+  border-radius: .06rem;
+  color: #fff;
+  font-family: Verdana;
+  font-size: .26rem;
+  font-weight: 500;
+  text-decoration: none;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #d0451b), color-stop(1, #bc3315));
+  background: -webkit-linear-gradient(top, #d0451b 5%, #bc3315 100%);
+  background: linear-gradient(to bottom, #d0451b 5%, #bc3315 100%);
+  -webkit-box-shadow: inset 0px 1px 0px 0px #cf866c;
+          box-shadow: inset 0px 1px 0px 0px #cf866c;
+  background-color: #d0451b;
+  cursor: pointer;
+  text-shadow: 0px 1px 0px #854629;
+  overflow: hidden;
+}
+
+.btn:hover {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #bc3315), color-stop(1, #d0451b));
+  background: -webkit-linear-gradient(top, #bc3315 5%, #d0451b 100%);
+  background: linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
+  background-color: #bc3315;
+}
+.btn:active {
+  position: relative;
+  top: 1px;
+}
+
+input[type="file"] {
+  position: absolute;
+  left: -100rem;
+  top: -100rem;
+  visibility: hidden;
+}
+
+.content {
+  padding-left: .3rem;
+  padding-right: .3rem;
+}
+
+.form__group {
+  margin-bottom: .15rem;
+  overflow: hidden;
+}
+
+.group__label {
+  float: left;
+  min-width: 2.5rem;
+  margin-right: .15rem;
+  padding-top: .13rem;
+  text-align: right;
+  font-size: .32rem;
+}
+
+.group__inner {
+  overflow: hidden;
+}
+
+.form__input {
+  display: block;
+  width: 100%;
+  height: .64rem;
+  padding: .12rem .24rem;
+  font-size: .28rem;
+  color: #555;
+  border: 1px solid #555;
+  border-radius: 4px;
+}
+
+select[multiple] {
+  height: auto;
+}

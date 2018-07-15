@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="{{ url_for('static', filename='scripts/flexible.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/app.css') }}">
+
+  <title>Scan Success</title>
+</head>
+<body class="content">
+  <div class="header">
+    <h1>X-Marketing</h1>
+    <hr>
+  </div>
+
+  <form action="/visitor-record" method="POST" class="form-horizontal">
+    <div class="form__group">
+      <label for="name" class="group__label">Visitor Name:</label>
+      <div class="group__inner">
+        <input type="text" name="name" id="name" class="form__input" value="{{data.visitor_name}}">
+      </div>
+    </div>
+    <div class="form__group">
+      <label for="company" class="group__label">Company name:</label>
+      <div class="group__inner">
+        <input type="text" name="company" id="company" class="form__input" value="{{data.company_name}}">
+      </div>
+    </div>
+    <div class="form__group">
+      <label for="title" class="group__label">Title:</label>
+      <div class="group__inner">
+        <input type="text" name="title" id="title" class="form__input" value="{{data.title}}">
+      </div>
+    </div>
+    <div class="form__group">
+      <label for="email" class="group__label">E-mail:</label>
+      <div class="group__inner">
+        <input type="text" name="email" id="email" class="form__input" value="{{data.email}}">
+      </div>
+    </div>
+    <div class="form__group">
+      <label for="phone" class="group__label">Phone:</label>
+      <div class="group__inner">
+        <input type="text" name="phone" id="phone" class="form__input" value="{{data.telephone}}">
+      </div>
+    </div>
+    <div class="form__group">
+      <label for="mobile" class="group__label">Mobile:</label>
+      <div class="group__inner">
+        <input type="text" name="mobile" id="mobile" class="form__input" value="{{data.mobile}}">
+      </div>
+    </div>
+    <div class="form__group">
+      <label for="address" class="group__label">Address:</label>
+      <div class="group__inner">
+        <input type="text" name="address" id="address" class="form__input" value="{{data.address}}">
+      </div>
+    </div>
+    <div class="form__group">
+      <label for="website" class="group__label">Website:</label>
+      <div class="group__inner">
+        <input type="text" name="website" id="website" class="form__input" value="{{data.website}}">
+      </div>
+    </div>
+    <div class="form__group">
+      <label for="application" class="group__label">Applications:</label>
+      <div class="group__inner">
+        <input type="text" name="application" id="application" class="form__input" value="Mouse">
+      </div>
+    </div>
+    <div class="form__group">
+      <label for="products" class="group__label">Products:</label>
+      <div class="group__inner">
+        <select name="product" class="form__input" multiple>
+          <option value="EPCalin">EPCalin</option>
+          <option value="Monk">Monk Fruitevia</option>
+          <option value="Rubu">Rubu-solution</option>
+          <option value="EPColor">EPColor</option>
+        </select>
+      </div>
+    </div>
+    <div class="form__group">
+      <label for="preference" class="group__label">Preferences:</label>
+      <div class="group__inner">
+        <select name="preference" class="form__input" multiple>
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="fiat">Fiat</option>
+          <option value="audi">Audi</option>
+        </select>
+      </div>
+    </div>
+    <div class="form__group">
+      <label class="group__label"></label>
+      <div class="group__inner">
+        <button class="btn">Submit</button>
+      </div>
+    </div>
+  </form>
+</body>
+</html>

@@ -5,7 +5,7 @@ import hashlib
 import hmac
 import base64
 import ocr
-from flask import Blueprint, request, redirect, url_for, render_template
+from flask import Blueprint, request, redirect, url_for, render_template, flash, session
 from xmarketing.db import Session, Visitor
 from xmarketing.util import Result
 from xmarketing import app
@@ -21,13 +21,13 @@ logger = logging.getLogger('xmarketing')
 def visitor_record():
     args = request.args if request.method == 'GET' else request.form
 
-    new_visitor = Visitor(visitor_name = args.get('visitor_name'),
-                          company_name = args.get('company_name'),
+    new_visitor = Visitor(visitor_name = args.get('name'),
+                          company_name = args.get('company'),
                           title = args.get('title'),
                           email = args.get('email'),
                           website = args.get('website'),
                           address = args.get('address'),
-                          telephone = args.get('telephone'),
+                          telephone = args.get('phone'),
                           mobile = args.get('mobile'),
                           application = args.get('application'),
                           prefered_products = args.get('product'),
@@ -46,40 +46,43 @@ def visitor_record():
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
-@app.route('/uploadorscan', methods=['GET', 'POST'])
-def upload_file():
-    busicard_uri = app.config['PIC_URL']
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = datetime.datetime.now().strftime("%Y%m%d%H%M%S")+'.'+file.filename.rsplit('.', 1)[1].lower()
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-            busicard_uri += filename
-
-            busicard_uri = 'http://p3atcmc03.bkt.clouddn.com/namecard1.jpg'
-
-            recv_str = ocr.businesscard_recognize(app.config['APPID'], busicard_uri)
-            recv_json = json.loads(recv_str)
-
-            print(recv_str)
-
-            if recv_json['result_list'][0]['code'] != 0:
-                return 'Sorry, recognition failed...'
-            recv_data = data_retrv(recv_json, filename)
-
-            return render_template('client-info.html', data = recv_data)
-
+@app.route('/')
+@app.route('/index')
+def index():
     return render_template('index.html')
+
+@app.route('/success')
+def success():
+    return render_template('success.html', data = session['card'])
+
+@app.route('/uploading', methods = ['POST'])
+def onUploda():
+    busicard_uri = app.config['PIC_URL']
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    # if user does not select file, browser also
+    # submit an empty part without filename
+    if file.filename == '':
+        flash('No selected file')
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = datetime.datetime.now().strftime("%Y%m%d%H%M%S")+'.'+file.filename.rsplit('.', 1)[1].lower()
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        busicard_uri += filename
+
+        busicard_uri = 'http://p3atcmc03.bkt.clouddn.com/namecard1.jpg'
+
+        recv_str = ocr.businesscard_recognize(app.config['APPID'], busicard_uri)
+        recv_json = json.loads(recv_str)
+
+        if recv_json['result_list'][0]['code'] != 0:
+            return 'Sorry, recognition failed...'
+
+        session['card'] = data_retrv(recv_json, filename)
+        return redirect(url_for('success'))
 
 def data_retrv(recv_json, filename):
     result = {'filename':filename}
