@@ -46,7 +46,8 @@ def visitor_record():
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
-@app.route('/uploadorscan', methods=['GET', 'POST'])
+@app.route('/', methods = ['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def upload_file():
     busicard_uri = app.config['PIC_URL']
     if request.method == 'POST':
@@ -80,6 +81,9 @@ def upload_file():
             return render_template('client-info.html', data = recv_data)
 
     return render_template('index.html')
+
+
+@app.route('/')
 
 def data_retrv(recv_json, filename):
     result = {'filename':filename}
