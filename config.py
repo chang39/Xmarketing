@@ -6,7 +6,7 @@ class DevConfig(Config):
     DATABASE_URI = 'mysql://dementor:Messi#10@127.0.0.1:3306/epc_test?charset=utf8'
     UPLOAD_FOLDER = '/Users/dementor/Documents/upload/xmarketing'
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
-    PIC_URL = 'https://epcdev-1252954035.cosbj.myqcloud.com/'
+    PIC_URL = 'http://epcdev-1252954035.file.myqcloud.com/'
     AUTH_ORIGINAL = 'a=%s&b=test&k=%s&e=%s&t=%s&r=%s&f=%s'
     APPID = '1252954035'
     SECRET_ID = 'AKIDrdEeu1a0lLwNcfuN8h4SeigV9brygIEz'
@@ -22,7 +22,7 @@ class TestConfig(Config):
     DATABASE_URI = 'mysql://epctest:Messi#10@127.0.0.1:3306/epc_test?charset=utf8'
     UPLOAD_FOLDER = '/data/app/busicard/'
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
-    PIC_URL = 'http://123.206.55.228/busicard/'
+    PIC_URL = 'http://epcdev-1252954035.file.myqcloud.com/'
     AUTH_ORIGINAL = 'a=%s&b=test&k=%s&e=%s&t=%s&r=%s&f=%s'
     APPID = '1252954035'
     SECRET_ID = 'AKIDrdEeu1a0lLwNcfuN8h4SeigV9brygIEz'
