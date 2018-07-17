@@ -76,11 +76,12 @@ def onUploda():
         return redirect(request.url)
     if file and allowed_file(file.filename):
         filename = datetime.datetime.now().strftime("%Y%m%d%H%M%S")+'.'+file.filename.rsplit('.', 1)[1].lower()
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
+        # file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        cos_upload(file, filename)
         busicard_uri += filename
 
-        #busicard_uri = 'http://123.206.55.228/busicard/20180715232838.jpg'
+        # busicard_uri = 'http://123.206.55.228/busicard/namecard1.jpg'
 
         recv_str = ocr.businesscard_recognize(app.config['APPID'], busicard_uri)
         print(recv_str)
@@ -126,3 +127,22 @@ def data_retrv(recv_json, filename):
 
 def recognition(pic_uri):
     return ocr.businesscard_recognize(app.config['APPID'], pic_uri)
+
+def cos_upload(filestorage, filename):
+    from qcloud_cos import CosConfig
+    from qcloud_cos import CosS3Client
+    secret_id = 'AKIDrdEeu1a0lLwNcfuN8h4SeigV9brygIEz'      # 替换为用户的 secretId
+    secret_key = 'ra8UefW1OahrpbCbopdJo8IG4hASaYUH'      # 替换为用户的 secretKey
+    region = 'ap-beijing'     # 替换为用户的 Region
+    token = ''                  # 使用临时密钥需要传入 Token，默认为空，可不填
+    config = CosConfig(Secret_id=secret_id, Secret_key=secret_key, Region=region, Token=token)
+    client = CosS3Client(config)
+    with filestorage.stream as fp:
+        response = client.put_object(
+            Bucket='epcdev-1252954035',
+            Body=fp,
+            Key=filename,
+            StorageClass='STANDARD',
+            ContentType='image/jpeg; charset=utf-8'
+        )
+    print(response)

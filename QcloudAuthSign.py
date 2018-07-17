@@ -34,3 +34,6 @@ def getSignature():
     original = app.config['AUTH_ORIGINAL'] % (app.config['APPID'],app.config['SECRET_ID'], timestampex, timestamp, rand, fileid)
     print(original)
     return make_digest(original, app.config['SECRET_KEY'])
+
+if __name__ == "__main__":
+    print(getSignature())
