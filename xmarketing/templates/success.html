@@ -14,7 +14,7 @@
     <hr>
   </div>
   <form action="/visitor-record" method="POST" class="form-horizontal">
-    <input type="text" name="pic_path" id="pic_path" class="form__input" value="{{data.filename}}">
+    <input type="hidden" name="pic_path" id="pic_path" class="form__input" value="{{data.filename}}">
     <div class="form__group">
       <label for="name" class="group__label">Visitor Name:</label>
       <div class="group__inner">
