@@ -9,8 +9,6 @@ from sqlalchemy import Column
 from sqlalchemy.dialects.mysql import VARCHAR, BIGINT, DATETIME, BOOLEAN
 from xmarketing import app
 
-print("Connecting " + app.config['DATABASE_URI'])
-
 # echo=False
 engine = create_engine(app.config['DATABASE_URI'],pool_recycle=3600)
 
