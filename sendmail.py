@@ -49,9 +49,11 @@ def scan_and_send(limit=15):
         product_list.append('AboutEPC')
         print(product_list)
         for attachment in product_list:
-           pdfpart = MIMEApplication(open(app.config['BROCHURE_FOLDER']+attachment.strip()+'.pdf', 'rb').read())
-           pdfpart.add_header('Content-Disposition', 'attachment', filename=attachment.strip()+'.pdf')
-           msg.attach(pdfpart)
+            if attachment == 'Stevia Aroma':
+                continue
+            pdfpart = MIMEApplication(open(app.config['BROCHURE_FOLDER']+attachment.strip()+'.pdf', 'rb').read())
+            pdfpart.add_header('Content-Disposition', 'attachment', filename=attachment.strip()+'.pdf')
+            msg.attach(pdfpart)
 
         print (('Sending E-mail to %s') % (visitor.visitor_name))
         result_str = send_by_smtp(msg,visitor.email)
