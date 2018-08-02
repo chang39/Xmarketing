@@ -114,7 +114,8 @@ def data_retrv(recv_json, filename):
             result['title'] = data[attr][0]['item']
             continue
         if attr == 'organization' and 'company_name' not in result:
-            result['company_name'] = data[attr][0]['item']['name']
+            if 'name' in data[attr][0]['item']:
+                result['company_name'] = data[attr][0]['item']['name']
             continue
         if attr == 'label' and 'address' not in result:
             result['address'] = data[attr][0]['item']['address']
