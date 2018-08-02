@@ -38,6 +38,6 @@ def businesscard_recognize(file):
 
     url = 'http://webapi.xfyun.cn/v1/service/v1/ocr/business_card'
     res = requests.post(url, data=body,headers=x_header)
-    app.logger.info('XF Recognition Succeed!')
+    app.logger.info('XF Recognition Succeed! [{0}]'.format(res.json()))
 
     return res.json()
